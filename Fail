@@ -1,0 +1,192 @@
+Teie ülesanne on alla laadida kood ja kommenteerida iga koodirida ära, et mida miski teeb ning siis kogu töö Githubi ülesse panna ning saata mulle link. Githubis pange Repo pealkirjaks: Failid
+ 
+Kogu 8tund, luuletus.txt ja lemmade.txt fail asuvad õppematerjalide all.
+
+
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+
+namespace Sonad
+{
+    /*
+    Ulesanne 11
+    
+    class Program
+    {
+        static void Main(string[] args) // näitab programmi
+        {
+            Console.WriteLine("Sisesta otsitav sõna:");// manuaalselt sisestadud käsklus mida peab tegema
+            Console.WriteLine("Kasuta formaati 's--a', kus - tähistab tundmatud tähte.");
+
+            String valik = Console.ReadLine();//määrab ära väärtuse mis on sisestatud. 
+
+            FailiAvamine(valik);      //faili avamine
+        }
+
+        private static void FailiAvamine(String valik)          // alamprogramm
+        {
+            Regex regulaaravaldis = new Regex(@"\b" + valik.Replace("-", "\\w"), RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            //muudab kriipsud
+            try
+            {
+                using (StreamReader sr = new StreamReader("C:/Users/krist/Desktop/lemmad.txt", Encoding.Default))//loeb failist lemmad.txt
+                {
+                    while (sr.EndOfStream == false) // tsükkel, mis kontrollib k
+                    {
+                        String line = sr.ReadLine(); // failide lugemine
+
+                        if (line.Length == valik.Length)// loeb kasutaja sõnapikkust
+                        {
+                            MatchCollection matches = regulaaravaldis.Matches(line);//märgib sobiva pikkuse
+
+                            if (matches.Count > 0)//kui vastete arv on suurem kui 0
+                            {
+                                Console.WriteLine(line);//kannab vastused
+                            }
+                        }
+                    }
+                    sr.Close(); // fsulgeb faili
+                }
+            }
+            catch (Exception e)//veateade
+            {
+                Console.WriteLine("Ei ole olemas sellise pikkusega sõne.");  // veateade
+                Console.WriteLine(e.Message);   // veateade
+            }
+            Console.ReadKey();
+        }
+    }
+}
+
+
+
+
+
+
+***************************** Uus ülesanne
+      
+        
+        
+Ulesanne 6
+
+
+        static void Main(string[] args) //programm
+        {
+            Console.WriteLine("Raha jagaja"); //manuaalseslt sisestatud tekst
+
+            const int yks = 1, kaks = 2, viis = 5, kymme = 10, kakskymmend = 20, viiskymmend = 50;//sentide väärtused
+
+            Console.WriteLine("Sisesta jagatava sentide v''ring: ");//sisestatud manuaalne tekst, mida kuvatakse konsoolis
+            
+            int vahesumma = int.Parse(Console.ReadLine());// sisestatud rahasumma konverteeritakse 
+            
+            //int vahesumma = Convert.ToInt32(Console.ReadLine()); arvutab vahesumma
+
+            Console.WriteLine("Vajuta nr 1 ja enter");//manuaalselt sisestatud konsooli tekst
+            int vajalike_sentide_arv = 0;//esialgu on sentide arv 0
+            string summa = Console.ReadLine();//arvutus tehe, määrab väärtuse 
+
+            switch (summa)//summa võrdub ühega
+            {
+                case "1":
+
+                    vajalike_sentide_arv = vahesumma / viiskymmend;//summa jagatakse 50-ga
+                    Console.WriteLine("50-sendised: " + vajalike_sentide_arv + " tk");//kui vahesumma on väiksem 50-st, on 50 sendiste arv 0
+                    //kui suurem, siis kogus, mitu korda 50 mahub summa sisse.
+                    vahesumma = vahesumma - vajalike_sentide_arv * viiskymmend;//vvahesumma jääkväärtus
+                    vajalike_sentide_arv = vahesumma / kakskymmend;//jääkväärtus jagatakse 20-ga
+                    Console.WriteLine("20-sendised: " + vajalike_sentide_arv + " tk");//kui vahesumma on väiksem 20-st, on 20 sendiste arv 0
+                    //kui suurem, siis  mitu korda 20 mahub vahesumma sisse.
+
+                    vahesumma = vahesumma - vajalike_sentide_arv * kakskymmend;//vahesumma jääkväärtus
+                    vajalike_sentide_arv = vahesumma / kymme;//jääkväärtus jagatakse 10-ga
+                    Console.WriteLine("10-sendiseid: " + vajalike_sentide_arv + " tk");//kui vahesumma on väiksem 10-st, on 10 sendiste arv 0
+                    //kui suurem, siis mitu korda 10 mahub summasse.
+
+                    vahesumma = vahesumma - vajalike_sentide_arv * kymme;//vahesumma jääkväärtus
+                    vajalike_sentide_arv = vahesumma / viis;//jääkväärtus jagatakse 5-ga
+                    Console.WriteLine(" 5-sendiseid: " + vajalike_sentide_arv + " tk");//kui vahesumma on väiksem 5-st, on 5 sendiste arv 0
+                    //kui suurem, siis mitu korda 5 mahub vahesumma sisse.
+
+
+                    vahesumma = vahesumma - vajalike_sentide_arv * viis;//jääkväärtus
+                    vajalike_sentide_arv = vahesumma / kaks;//jääkväärtus jagatakse 2-ga
+                    Console.WriteLine(" 2-sendiseid: " + vajalike_sentide_arv + " tk");//kui vahesumma on väiksem 2-st, on 2 sendiste arv 0
+                    //kui suurem,siis mitu korda 2 mahub vahesumma sisse.
+
+                    vahesumma = vahesumma - vajalike_sentide_arv * kaks;//vahesummast saadakse jääkväärtus
+                    vajalike_sentide_arv = vahesumma / yks;//väärtus jagatakse 1-ga
+                    Console.WriteLine(" 1-sendiseid: " + vajalike_sentide_arv + " tk");//kui vahesumma on väiksem 1-st, on 1 sendiste arv 0
+                    //kui suurem, siis arvutab mitu korda 1 mahub vahesumma sisse.
+
+                    break;//lõpp
+                default:// kui kasutaja ei vali üks siis tuleb tekst:
+                    Console.WriteLine("\nVale. Valikut ei tehtud");//manuaalselt kirjutatud konsooli tekst
+                    break;//lõpp
+            }
+
+        }
+    }
+}
+
+************* Uus ülesanne
+
+
+Ulesanne 8, Luuletus
+
+    Hommikul kui üles ärkan,
+    arvutit ma laual märkan.
+    Padja, teki viskan maha,
+    jooksen ruttu compu taha.
+    Kiirelt sisestan parooli,
+    kuid juba tuleb minna kooli.
+    Error tuleb ette siis,
+    kool on mulle räme piin.
+
+ 
+
+    class Program
+    {
+        static void faililugeine() // faili lugemine
+        {
+            string line; // sõna muutuja 
+            try
+            {
+                using (StreamReader sr = new StreamReader("C:/Users/krist/Desktop/luuletus.txt"))//loeb faili
+                {
+                    int cnt = 0; // rea muutuja
+                    while (sr.EndOfStream == false) // kontroll
+                    {
+                        ++cnt; //rea nr suurendamine 1 ühiku võrra
+                        line = sr.ReadLine(); //sõna lugemine failist
+                        int pikkus = line.Length; // ssõna pikkuse lugemine
+                        Console.WriteLine(cnt + " " + line + " " + pikkus); // info edastus
+                    }
+                    sr.Close(); // programmi sulgemine
+                }
+            }
+            catch (Exception e)//veateade
+            {
+                Console.WriteLine("Faili ei saa lugeda.");//veateade
+                Console.WriteLine(e.Message); veateade
+            }
+        }
+
+
+        static void Main(string[] args) // näitab programmi
+        {
+           
+            Console.Title = "Faili operatsioon"; //pealkiri
+            faililugeine();
+
+            Console.ReadKey(); //pausile jätmine
+        }
+
+    }
+}
